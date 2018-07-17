@@ -1,4 +1,21 @@
-<% @todos.each do |todo| %>
-<%= todo.name %>
-<%= todo.description %>
-<% end %>
+<h2>Todo List</h2>
+<table>
+    <tr>
+     <th>Name</th>
+    <th>Description</th>  
+    <th></th>
+    </tr>
+     <% @todos.each do |todo| %>
+    <tr>
+  <td><%= todo.name %></td>
+  <td><%= todo.description %></td>
+  <td>
+      <%= link_to "Edit", edit_todo_path(todo) %>|
+      <%= link_to "Show", todo_path(todo) %> |
+      <%= link_to "Delete",todo_path(todo), method: :delete, data: {confirm: "are you sure?"}  %> 
+  </td>
+  
+    </tr>
+    <% end %>
+</table>
+
