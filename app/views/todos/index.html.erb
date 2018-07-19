@@ -10,9 +10,9 @@
   <td><%= todo.name %></td>
   <td><%= todo.description %></td>
   <td>
-      <%= link_to "Edit", edit_todo_path(todo) %>|
+      <%= link_to "Edit",  edit_todo_path(todo), :class => "btn btn-primary" %>|
       <%= link_to "Show", todo_path(todo) %> |
-      <%= link_to "Delete",todo_path(todo), method: :delete, data: {confirm: "are you sure?"}  %> 
+      <%= link_to "Delete",todo_path(todo), method: :delete, data: {confirm: "are you sure?"}, class: :"btn btn-danger"  %> 
   </td>
   
     </tr>

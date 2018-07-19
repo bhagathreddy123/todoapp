@@ -32,3 +32,6 @@ Creating app... done, ⬢ quiet-stream-67395
 https://quiet-stream-67395.herokuapp.com/ | https://git.heroku.com/quiet-stream-67395.git
 
 $ git push heroku master
+$ heroku run rails db:migrate
+$ heroku rename bhagath-todo-app
+$ rails generate integration_test pages
