@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root "pages#home"
   get "pages/home", to: "pages#home"
   resources :todos
+  resources :recipes
   get  "/about", to: "pages#about"
   get "/help", to: "pages#help"
 end

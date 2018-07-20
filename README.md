@@ -34,4 +34,8 @@ https://quiet-stream-67395.herokuapp.com/ | https://git.heroku.com/quiet-stream-
 $ git push heroku master
 $ heroku run rails db:migrate
 $ heroku rename bhagath-todo-app
+
+Testing
 $ rails generate integration_test pages
+
+$ rails test test/integration/recipes_test.rb 
