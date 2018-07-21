@@ -32,7 +32,17 @@ class ChefsController < ApplicationController
     @chef = Chef.find(params[:id])
     @chef_recipes = @chef.recipes.paginate(page: params[:page],per_page: 4)
   end
+
+  def destroy
+    @chef = Chef.find(params[:id])
+    if @chef.destroy
+      flash[:danger] = "chef deleted successfully"
+      redirect_to chefs_path
+    end
+  end
+
   private
+  
   def chef_params
     params.require(:chef).permit!
   end
