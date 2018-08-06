@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   root "pages#home"
   get "pages/home", to: "pages#home"
   resources :todos
-  resources :recipes
+  resources :recipes do
+    resources :comments, only: [:create]
+  end
   resources :ingredients, except: [:destroy]
   get  "/about", to: "pages#about"
   get "/help", to: "pages#help"
