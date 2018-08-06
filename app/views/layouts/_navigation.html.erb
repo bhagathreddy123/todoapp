@@ -43,8 +43,10 @@
              <%= link_to ingredient.name.capitalize, ingredient_path(ingredient) %>
            </li>
           <% end %>
+          <% if logged_in? && current_chef.admin? %>
          <li role="separator" class="divider"></li>
          <li><%= link_to "New Ingredient", new_ingredient_path %></li>
+         <% end %>
          </ul>
         </li>
         <% end %>
