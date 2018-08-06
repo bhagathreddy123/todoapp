@@ -1,26 +1,28 @@
 class RecipesController < ApplicationController
-    before_action :set_recipe, only: [:edit,:update,:show,:destroy]
-    before_action :require_user, except: [:index, :show]
-    before_action :require_same_user, only: [:edit, :update, :destroy]
+  
+  before_action :set_recipe, only: [:edit,:update,:show,:destroy]
+  before_action :require_user, except: [:index, :show]
+  before_action :require_same_user, only: [:edit, :update, :destroy]
     
-    def new
-        @recipe = Recipe.new
+  def new
+    @recipe = Recipe.new
+  end
+  
+  def create
+    @recipe = Recipe.new(recipe_params)
+    @recipe.chef = current_chef
+    if @recipe.save
+      flash[:success] = "Recipe was created successfully"
+      redirect_to recipes_path(@recipe)
+    else
+      render :new
     end
-    def create
-        @recipe = Recipe.new(recipe_params)
-        @recipe.chef = current_chef
-        if @recipe.save
-            flash[:success] = "Recipe was created successfully"
-          redirect_to recipes_path(@recipe)
-        else
-          render :new
-        end
-    end
+  end
 
- def edit
- end
+  def edit
+  end
 
- def update
+  def update
     if @recipe.update(recipe_params)
       flash[:success] = "Recipe was updated successfully!"
       redirect_to recipe_path(@recipe)
@@ -29,30 +31,37 @@ class RecipesController < ApplicationController
     end
   end
         
-    def index
-        @recipes = Recipe.paginate(page: params[:page], per_page: 5)
+  def index
+    @recipes = Recipe.paginate(page: params[:page], per_page: 5)
+  end
+
+  def show
+    @comments = @recipe.comments.paginate(page: params[:page], 
+                                                per_page: 5)
+  end
+  
+  def destroy
+    if @recipe.destroy
+      flash[:success] = "Recipe deleted successfully"
+      redirect_to recipes_path
     end
-    def show
-    end
-    def destroy
-     if @recipe.destroy
-            flash[:success] = "Recipe deleted successfully"
-            redirect_to recipes_path
-        end
-    end
-   
-    private
-    def set_recipe
-        @recipe = Recipe.find(params[:id])
-    end
-    def recipe_params
-       # params.require(:recipe).permit!
-        params.require(:recipe).permit(:name, :description, ingredient_ids: [])
-    end
-    def require_same_user
-      if current_chef != @recipe.chef
-        flash[:danger] = "You can only edit or delete your own recipes"
-        redirect_to recipes_path
-      end  
-    end
+  end
+  
+  private
+  
+  def set_recipe
+    @recipe = Recipe.find(params[:id])
+  end
+  
+  def recipe_params
+    # params.require(:recipe).permit!
+    params.require(:recipe).permit(:name, :description, ingredient_ids: [])
+  end
+  
+  def require_same_user
+    if current_chef != @recipe.chef
+      flash[:danger] = "You can only edit or delete your own recipes"
+      redirect_to recipes_path
+    end  
+  end
 end
