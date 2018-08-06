@@ -13,7 +13,7 @@
 
             <%= time_ago_in_words(recipe.created_at) %> 
 
-           ago</small></span>
+           ago by <%= recipe.chef.chefname.capitalize %></small></span>
       </p>
       <% if logged_in? && (current_chef == recipe.chef || current_chef.admin?)%>
         <div class="recipe-actions">
